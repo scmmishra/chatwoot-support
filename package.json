@@ -1,0 +1,10 @@
+{
+  "name": "@scmmishra/chatwoot-support",
+  "version": "0.1.0",
+  "description": "A Chatwoot inbox in Comet: your open conversations, each with its own agent thread",
+  "type": "module",
+  "keywords": ["comet-plugin", "chatwoot"],
+  "files": ["index.tsx", "README.md"],
+  "comet": { "name": "chatwoot", "title": "Chatwoot Support", "api": "^0.1.0" },
+  "publishConfig": { "access": "public" }
+}
