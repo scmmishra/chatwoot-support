@@ -1,9 +1,6 @@
 import { Button, definePlugin, Item, List, Messages, Stack, Text, type MessageData } from "@comet/plugin"
 import { createEffect, createSignal, For, onCleanup, Show, untrack } from "solid-js"
 import { createStore, reconcile } from "solid-js/store"
-import { existsSync, readFileSync } from "node:fs"
-import { homedir } from "node:os"
-import { join } from "node:path"
 
 /**
  * Chatwoot Support: a Chatwoot inbox, as a Comet plugin. It reads conversations with the `chatwoot` CLI, which must be on
@@ -29,8 +26,7 @@ const POLL_MS = 60 * SECOND_MS
 const STALE_MS = 15 * SECOND_MS
 /** The start of each conversation's thread key. The conversation's id follows it. */
 const THREAD_PREFIX = "cw-conv-"
-/** The file in Comet's folder whose text each conversation's thread starts with, after the plugin's own. */
-const CONTEXT_FILE = "chatwoot-support.md"
+
 /** Chatwoot's `message_type` values that draw differently. Outgoing messages and templates draw alike. */
 const MESSAGE_TYPE = { incoming: 0, activity: 2 } as const
 /** A mention as Chatwoot writes it in a message: `[@Name](mention://user/<id>/<name>)`. Comet has no page to open for it. */
@@ -107,12 +103,8 @@ const transcriptOf = (messages: readonly MessageData[]) =>
   messages.map((message) => `${message.author ?? "Activity"}${message.kind === "note" ? " (private note)" : ""}: ${message.text}`).join("\n")
 
 export default definePlugin((comet) => {
-  /**
-   * What the user adds to each conversation's thread, such as the tools and access they have. It is theirs, so
-   * it lives in a file outside the plugin, read each time a thread opens, so an edit applies at once.
-   */
-  const contextFile = join(comet.env.COMET_HOME ?? join(homedir(), ".comet"), CONTEXT_FILE)
-  const readContext = () => (existsSync(contextFile) ? readFileSync(contextFile, "utf8").trim() : "")
+  /** The Extra context setting, which each new conversation thread starts with after the plugin's own words. */
+  const readContext = () => String(comet.settings.get("context") ?? "").trim()
 
   /** `readAt` is when the last read finished, in milliseconds since the epoch. */
   const [inbox, setInbox] = createStore<{ conversations: Conversation[]; loading: boolean; error?: string; readAt?: number }>({ conversations: [], loading: false })

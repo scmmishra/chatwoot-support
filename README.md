@@ -17,6 +17,6 @@ comet plugin on chatwoot          # in your Chatwoot checkout
 
 Then open the "Chatwoot Support" setup from the palette.
 
-## Your context
+## Settings
 
-Each conversation's thread starts with a short prompt. To tell the agent more, such as which tools and access you have, write it in `~/.comet/chatwoot-support.md`. The plugin adds that file's text to every new thread.
+- **Extra context**: added to every new conversation thread, such as which tools and access you have. Set it in Settings → Plugins, or with `comet plugin set chatwoot context "…"`.

@@ -1,10 +1,30 @@
 {
   "name": "@scmmishra/chatwoot-support",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Chatwoot inbox in Comet: your open conversations, each with its own agent thread",
   "type": "module",
-  "keywords": ["comet-plugin", "chatwoot"],
-  "files": ["index.tsx", "README.md"],
-  "comet": { "name": "chatwoot", "title": "Chatwoot Support", "api": "^0.1.0" },
-  "publishConfig": { "access": "public" }
+  "keywords": [
+    "comet-plugin",
+    "chatwoot"
+  ],
+  "files": [
+    "index.tsx",
+    "README.md"
+  ],
+  "comet": {
+    "name": "chatwoot",
+    "title": "Chatwoot Support",
+    "api": "^0.2.0",
+    "settings": [
+      {
+        "key": "context",
+        "title": "Extra context",
+        "type": "text",
+        "description": "Added to every conversation's thread, such as the tools and access you have."
+      }
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
